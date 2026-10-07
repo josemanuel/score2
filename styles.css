@@ -555,3 +555,81 @@ th {
     border: 1px solid #ccc;
   }
 }
+
+/* ===== MODEL TABS ===== */
+.model-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.tab {
+  flex: 1;
+  padding: 0.9rem 1rem;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  position: relative;
+}
+
+.tab + .tab {
+  border-left: 1px solid var(--border);
+}
+
+.tab:hover {
+  background: #f0f4f8;
+  color: var(--primary);
+}
+
+.tab.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.tab-sub {
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.tab.active .tab-sub {
+  opacity: 0.9;
+}
+
+/* Model tag in results */
+.model-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--primary-bg);
+  color: var(--primary);
+  padding: 0.15rem 0.55rem;
+  border-radius: 12px;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+}
+
+/* Moderate row for diabetes table */
+.row-mod td:first-child {
+  color: #1565c0;
+  font-weight: 600;
+}
+
+/* Diabetes-only fields animation */
+.diabetes-only {
+  animation: fadeIn 0.3s ease;
+}

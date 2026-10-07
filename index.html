@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Calculadora SCORE2 de riesgo cardiovascular a 10 años según guías ESC 2021. Calibrada para población española y regiones europeas.">
+  <meta name="description" content="Calculadora SCORE2 y SCORE2-Diabetes de riesgo cardiovascular a 10 años según guías ESC 2021/2023. Calibrada para población española y regiones europeas.">
   <meta name="theme-color" content="#0d47a1">
-  <title>Calculadora SCORE2 · Riesgo Cardiovascular</title>
+  <title>Calculadora SCORE2 · SCORE2-Diabetes</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,14 +25,31 @@
           <p class="subtitle">Riesgo cardiovascular a 10 años</p>
         </div>
       </div>
-      <span class="badge">ESC 2021 · España</span>
+      <span class="badge">ESC 2021 / 2023 · España</span>
     </div>
   </header>
 
   <main class="container">
     <section class="disclaimer" role="note">
-      <strong>Aviso importante:</strong> Esta calculadora está destinada a profesionales sanitarios. Estima el riesgo de eventos cardiovasculares fatales y no fatales a 10 años en personas aparentemente sanas de 40–69 años <em>sin</em> enfermedad cardiovascular establecida, diabetes mellitus, ERC grave ni trastornos lipídicos/genéticos raros. No sustituye el juicio clínico.
+      <strong>Aviso importante:</strong> Esta calculadora está destinada a profesionales sanitarios.
+      <span id="disclaimerText">
+        SCORE2 estima el riesgo en personas aparentemente sanas de 40–69 años <em>sin</em> diabetes ni enfermedad cardiovascular establecida.
+        SCORE2-Diabetes se aplica a pacientes con <em>diabetes tipo 2</em> de 40–69 años sin ECV establecida ni daño grave de órgano diana.
+      </span>
+      No sustituye el juicio clínico.
     </section>
+
+    <!-- SELECTOR DE MODELO -->
+    <div class="model-tabs" role="tablist" aria-label="Modelo de cálculo">
+      <button type="button" class="tab active" data-model="score2" role="tab" aria-selected="true" id="tab-score2">
+        SCORE2
+        <span class="tab-sub">Sin diabetes</span>
+      </button>
+      <button type="button" class="tab" data-model="diabetes" role="tab" aria-selected="false" id="tab-diabetes">
+        SCORE2-Diabetes
+        <span class="tab-sub">Diabetes tipo 2</span>
+      </button>
+    </div>
 
     <div class="layout">
       <!-- FORMULARIO -->
@@ -41,14 +58,12 @@
 
         <form id="score2-form" novalidate>
           <div class="form-grid">
-            <!-- Edad -->
             <div class="field">
               <label for="edad">Edad <span class="unit">(años)</span></label>
               <input type="number" id="edad" name="edad" min="40" max="69" step="1" placeholder="40–69" required>
               <span class="hint">Rango válido: 40–69 años</span>
             </div>
 
-            <!-- Sexo -->
             <div class="field">
               <label>Sexo</label>
               <div class="radio-group" role="radiogroup" aria-label="Sexo">
@@ -63,7 +78,6 @@
               </div>
             </div>
 
-            <!-- Fumador -->
             <div class="field">
               <label>Fumador actual</label>
               <div class="radio-group" role="radiogroup" aria-label="Fumador">
@@ -78,13 +92,11 @@
               </div>
             </div>
 
-            <!-- PAS -->
             <div class="field">
               <label for="pas">Presión arterial sistólica <span class="unit">(mmHg)</span></label>
               <input type="number" id="pas" name="pas" min="90" max="200" step="1" placeholder="ej. 130" required>
             </div>
 
-            <!-- Colesterol total -->
             <div class="field">
               <label for="colTotal">Colesterol total</label>
               <div class="input-with-unit">
@@ -96,7 +108,6 @@
               </div>
             </div>
 
-            <!-- HDL -->
             <div class="field">
               <label for="hdl">Colesterol HDL</label>
               <div class="input-with-unit">
@@ -108,7 +119,31 @@
               </div>
             </div>
 
-            <!-- Región -->
+            <!-- CAMPOS DIABETES -->
+            <div class="field diabetes-only" hidden>
+              <label for="edadDx">Edad al diagnóstico DM2 <span class="unit">(años)</span></label>
+              <input type="number" id="edadDx" name="edadDx" min="10" max="69" step="1" placeholder="ej. 48">
+              <span class="hint">Edad en el momento del diagnóstico de diabetes tipo 2</span>
+            </div>
+
+            <div class="field diabetes-only" hidden>
+              <label for="hba1c">HbA1c</label>
+              <div class="input-with-unit">
+                <input type="number" id="hba1c" name="hba1c" min="20" max="150" step="0.1" placeholder="ej. 53">
+                <select id="unitHba1c" aria-label="Unidad HbA1c">
+                  <option value="mmol">mmol/mol</option>
+                  <option value="percent">%</option>
+                </select>
+              </div>
+              <span class="hint">IFCC (mmol/mol) o DCCT (%)</span>
+            </div>
+
+            <div class="field diabetes-only" hidden>
+              <label for="egfr">eGFR <span class="unit">(mL/min/1,73 m²)</span></label>
+              <input type="number" id="egfr" name="egfr" min="15" max="150" step="1" placeholder="ej. 85">
+              <span class="hint">Filtrado glomerular estimado (CKD-EPI u otra fórmula)</span>
+            </div>
+
             <div class="field field-full">
               <label for="region">Región de riesgo europea</label>
               <select id="region" name="region" required>
@@ -122,19 +157,15 @@
           </div>
 
           <div class="actions">
-            <button type="submit" class="btn btn-primary" id="btnCalcular">
-              Calcular SCORE2
-            </button>
-            <button type="button" class="btn btn-secondary" id="btnLimpiar">
-              Limpiar
-            </button>
+            <button type="submit" class="btn btn-primary" id="btnCalcular">Calcular</button>
+            <button type="button" class="btn btn-secondary" id="btnLimpiar">Limpiar</button>
           </div>
         </form>
       </section>
 
       <!-- RESULTADOS -->
       <section class="card results-card" id="results" hidden>
-        <h2>Resultado</h2>
+        <h2>Resultado <span class="model-tag" id="modelTag">SCORE2</span></h2>
 
         <div class="result-main">
           <div class="score-circle" id="scoreCircle">
@@ -173,7 +204,7 @@
           </div>
         </div>
 
-        <p class="footnote">
+        <p class="footnote" id="footnote">
           Categorías según ESC 2021 Prevention Guidelines. Los umbrales varían con la edad (&lt;50 vs ≥50 años).
         </p>
       </section>
@@ -181,8 +212,8 @@
 
     <!-- INFORMACIÓN ADICIONAL -->
     <section class="card info-card">
-      <h2>Categorías de riesgo (ESC 2021)</h2>
-      <div class="table-wrapper">
+      <h2 id="infoTitle">Categorías de riesgo — SCORE2 (ESC 2021)</h2>
+      <div class="table-wrapper" id="infoTableScore2">
         <table>
           <thead>
             <tr>
@@ -210,7 +241,40 @@
           </tbody>
         </table>
       </div>
-      <p class="info-note">
+      <div class="table-wrapper" id="infoTableDiabetes" hidden>
+        <table>
+          <thead>
+            <tr>
+              <th>Categoría</th>
+              <th>Riesgo a 10 años</th>
+              <th>Objetivo c-LDL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-low">
+              <td>Bajo</td>
+              <td>&lt; 5 %</td>
+              <td>&lt; 2,6 mmol/L (&lt; 100 mg/dL)</td>
+            </tr>
+            <tr class="row-mod">
+              <td>Moderado</td>
+              <td>5 – &lt; 10 %</td>
+              <td>&lt; 2,6 mmol/L (&lt; 100 mg/dL)</td>
+            </tr>
+            <tr class="row-high">
+              <td>Alto</td>
+              <td>10 – &lt; 20 %</td>
+              <td>&lt; 1,8 mmol/L (&lt; 70 mg/dL) + ≥50 % ↓</td>
+            </tr>
+            <tr class="row-veryhigh">
+              <td>Muy alto</td>
+              <td>≥ 20 %</td>
+              <td>&lt; 1,4 mmol/L (&lt; 55 mg/dL) + ≥50 % ↓</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="info-note" id="infoNote">
         SCORE2 estima el riesgo de infarto de miocardio, ictus o muerte cardiovascular a 10 años.
         La calibración regional corrige el riesgo basal según la mortalidad CV de cada zona europea.
       </p>
@@ -220,8 +284,8 @@
   <footer class="footer">
     <div class="container">
       <p>
-        Basado en SCORE2 Working Group &amp; ESC Cardiovascular Risk Collaboration.
-        <em>Eur Heart J</em> 2021. Fórmulas implementadas a partir del modelo de calibración regional.
+        SCORE2 Working Group &amp; ESC CRC. <em>Eur Heart J</em> 2021 ·
+        SCORE2-Diabetes Working Group &amp; ESC CRC. <em>Eur Heart J</em> 2023.
       </p>
       <p class="footer-note">Uso exclusivo para profesionales sanitarios · No sustituye la valoración clínica individualizada</p>
     </div>

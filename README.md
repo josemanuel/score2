@@ -1,96 +1,85 @@
-# Calculadora SCORE2 · Riesgo Cardiovascular a 10 años
+# Calculadora SCORE2 + SCORE2-Diabetes
 
-Calculadora web profesional del **SCORE2** (Systematic Coronary Risk Evaluation 2) según las guías de la Sociedad Europea de Cardiología (ESC 2021).
+Calculadora web profesional del **SCORE2** y **SCORE2-Diabetes** según las guías de la Sociedad Europea de Cardiología.
 
-Estima el riesgo de eventos cardiovasculares **fatales y no fatales** (infarto de miocardio, ictus o muerte cardiovascular) a 10 años en personas aparentemente sanas de **40–69 años**.
+Estima el riesgo de eventos cardiovasculares **fatales y no fatales** (infarto de miocardio, ictus o muerte cardiovascular) a 10 años.
 
 Calibrada para las **4 regiones de riesgo europeas**, con España en la región de **bajo riesgo**.
 
 ---
 
-## Características
+## Modelos incluidos
 
-- Cálculo exacto del linear predictor y riesgo no calibrado según coeficientes publicados del SCORE2
-- Calibración regional (Low / Moderate / High / Very high)
-- Categorías de riesgo según umbrales ESC 2021 diferenciados por edad (&lt;50 vs ≥50 años)
-- Recomendaciones terapéuticas y objetivos de tratamiento (Paso 1 y Paso 2)
-- Soporte de unidades mmol/L y mg/dL
-- Diseño responsive, accesible y orientado a uso clínico
-- 100 % client-side (sin servidor ni dependencias externas de runtime)
+| Modelo | Población | Edad | Variables extra |
+|--------|-----------|------|-----------------|
+| **SCORE2** | Sin diabetes ni ECV establecida | 40–69 | — |
+| **SCORE2-Diabetes** | Diabetes tipo 2 sin ECV ni daño grave de órgano diana | 40–69 | HbA1c, eGFR, edad al diagnóstico |
 
 ---
 
-## Uso clínico
+## Características
 
-| Variable              | Rango / valores                          |
-|-----------------------|------------------------------------------|
-| Edad                  | 40 – 69 años                             |
-| Sexo                  | Hombre / Mujer                           |
-| Fumador actual        | Sí / No                                  |
-| PAS                   | mmHg                                     |
-| Colesterol total      | mmol/L o mg/dL                           |
-| Colesterol HDL        | mmol/L o mg/dL                           |
-| Región de riesgo      | Bajo (España), Moderado, Alto, Muy alto  |
+- Cálculo exacto con coeficientes publicados (SCORE2 2021 y SCORE2-Diabetes 2023)
+- Calibración regional (Low / Moderate / High / Very high)
+- Categorías de riesgo según umbrales ESC correspondientes a cada modelo
+- Recomendaciones terapéuticas y objetivos de tratamiento (Paso 1 y Paso 2)
+- Soporte de unidades mmol/L ↔ mg/dL y HbA1c mmol/mol ↔ %
+- Diseño responsive, accesible y orientado a uso clínico
+- 100 % client-side (sin servidor ni dependencias externas)
 
-### Categorías de riesgo (ESC 2021)
+---
 
-| Categoría       | &lt; 50 años       | 50–69 años      |
-|-----------------|------------------|-----------------|
-| Bajo-moderado   | &lt; 2,5 %         | &lt; 5 %          |
-| Alto            | 2,5 – &lt; 7,5 %   | 5 – &lt; 10 %     |
-| Muy alto        | ≥ 7,5 %          | ≥ 10 %          |
+## Categorías de riesgo
+
+### SCORE2 (ESC 2021)
+
+| Categoría | &lt; 50 años | 50–69 años |
+|-----------|-------------|------------|
+| Bajo-moderado | &lt; 2,5 % | &lt; 5 % |
+| Alto | 2,5 – &lt; 7,5 % | 5 – &lt; 10 % |
+| Muy alto | ≥ 7,5 % | ≥ 10 % |
+
+### SCORE2-Diabetes (ESC 2023)
+
+| Categoría | Riesgo a 10 años | Objetivo c-LDL |
+|-----------|------------------|----------------|
+| Bajo | &lt; 5 % | &lt; 2,6 mmol/L |
+| Moderado | 5 – &lt; 10 % | &lt; 2,6 mmol/L |
+| Alto | 10 – &lt; 20 % | &lt; 1,8 mmol/L + ≥50 % ↓ |
+| Muy alto | ≥ 20 % | &lt; 1,4 mmol/L + ≥50 % ↓ |
 
 ---
 
 ## Despliegue en GitHub Pages
 
-1. Crea un repositorio nuevo en GitHub (por ejemplo `score2-calculator`).
-2. Sube los tres archivos de este proyecto a la raíz del repositorio:
+1. Crea un repositorio nuevo en GitHub.
+2. Sube los archivos a la raíz:
    ```
    index.html
    styles.css
    script.js
    README.md
    ```
-3. Ve a **Settings → Pages**.
-4. En *Source* selecciona la rama `main` (o `master`) y la carpeta `/ (root)`.
-5. Guarda. En unos minutos la calculadora estará disponible en:
-   ```
-   https://<tu-usuario>.github.io/score2-calculator/
-   ```
+3. **Settings → Pages** → Source: rama `main`, carpeta `/ (root)`.
+4. Disponible en `https://<usuario>.github.io/<repo>/`
 
-### Alternativa: despliegue local
-
-Abre `index.html` directamente en el navegador. No requiere servidor.
-
----
-
-## Estructura del proyecto
-
-```
-score2-calculator/
-├── index.html      # Estructura y formularios
-├── styles.css      # Estilos (diseño médico profesional)
-├── script.js       # Lógica de cálculo SCORE2
-└── README.md       # Este archivo
-```
+También funciona abriendo `index.html` directamente en el navegador.
 
 ---
 
 ## Referencias
 
-- SCORE2 Working Group and ESC Cardiovascular Risk Collaboration. *SCORE2 risk prediction algorithms: new models to estimate 10-year risk of cardiovascular disease in Europe.* Eur Heart J. 2021;42(25):2439-2454.
-- Visseren FLJ, et al. *2021 ESC Guidelines on cardiovascular disease prevention in clinical practice.* Eur Heart J. 2021;42(34):3227-3337.
-- ESC/EAS Guidelines for the management of dyslipidaemias (actualizaciones posteriores).
+- SCORE2 Working Group and ESC CRC. *SCORE2 risk prediction algorithms.* Eur Heart J. 2021;42(25):2439-2454.
+- SCORE2-Diabetes Working Group and ESC CRC. *SCORE2-Diabetes: 10-year cardiovascular risk prediction in type 2 diabetes.* Eur Heart J. 2023;44(28):2544-2556.
+- Visseren FLJ, et al. *2021 ESC Guidelines on CVD prevention.* Eur Heart J. 2021.
+- Marx N, et al. *2023 ESC Guidelines for the management of CVD in patients with diabetes.* Eur Heart J. 2023.
 
 ---
 
 ## Aviso legal
 
-Esta herramienta está destinada **exclusivamente a profesionales sanitarios**.  
-No sustituye el juicio clínico ni la valoración individualizada del paciente.  
-No debe utilizarse en personas con enfermedad cardiovascular aterosclerótica establecida, diabetes mellitus, enfermedad renal crónica grave ni trastornos lipídicos genéticos raros (para los que existen otras herramientas: SCORE2-Diabetes, SCORE2-OP, etc.).
-
----
+Herramienta destinada **exclusivamente a profesionales sanitarios**.  
+No sustituye el juicio clínico.  
+SCORE2-Diabetes **no es aplicable** a diabetes tipo 1 ni a pacientes con enfermedad cardiovascular aterosclerótica establecida.
 
 MIT License · Uso libre con atribución
